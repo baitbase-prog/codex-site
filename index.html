@@ -29,3 +29,4 @@
     <script>(function(){ var el=document.querySelector('.js-sticker'); if(!el) return; function play(){ el.classList.remove('is-on'); void el.offsetWidth; el.classList.add('is-on'); } if('IntersectionObserver' in window){ var io=new IntersectionObserver(function(entries){ entries.forEach(function(e){ if(e.isIntersecting){ play(); io.disconnect(); } });}, { threshold:0.6 }); io.observe(el);} else { setTimeout(play,200);} el.addEventListener('click',play);})();</script>
 </body>
 </html>
+
