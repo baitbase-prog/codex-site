@@ -1,32 +1,1141 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Codex Site</title>
-    <link href="https://fonts.cdnfonts.com/css/womby" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <title>WNF Marketing Strategy Builder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
-        body {
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Womby', sans-serif;
-        }
+/* Dark theme variables */
+:root {
+  --bg-color: #101321;
+  --surface: #1c2140;
+  --surface-light: #292f50;
+  --primary: #5a77ff;
+  --accent: #f4bf60;
+  --text-color: #f6f7fb;
+  --muted-color: #8a90b8;
+  --border-radius: 12px;
+  --transition-speed: 0.2s;
+}
 
-        h1 {
-            font-family: 'Womby', sans-serif;
+/* Basic resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #23284c;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--accent);
+}
+
+.progress {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.progress-item {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--surface-light);
+  color: var(--muted-color);
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #2c3261;
+  transition: background var(--transition-speed), color var(--transition-speed);
+}
+
+.progress-item.active {
+  background: var(--primary);
+  color: var(--bg-color);
+}
+
+.contact-button {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: var(--border-radius);
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  transition: background var(--transition-speed), color var(--transition-speed);
+}
+
+.contact-button:hover {
+  background: var(--primary);
+  color: var(--bg-color);
+}
+
+/* Main layout */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem 4rem;
+}
+
+/* Mascot message */
+.mascot {
+  width: 100%;
+  max-width: 800px;
+  background: var(--surface);
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mascot p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted-color);
+}
+
+/* Form wizard */
+.wizard-form {
+  width: 100%;
+  max-width: 800px;
+}
+
+.step {
+  background: var(--surface);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 1.5rem;
+}
+
+.step.hidden {
+  display: none;
+}
+
+.step h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--primary);
+}
+
+.step .description {
+  font-size: 0.9rem;
+  color: var(--muted-color);
+  margin-bottom: 1rem;
+}
+
+/* Card grid for project type */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.card {
+  background: var(--surface-light);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: transform var(--transition-speed), background var(--transition-speed);
+  user-select: none;
+  text-align: center;
+  border: 1px solid #2c3261;
+}
+
+.card.selected {
+  background: var(--primary);
+  color: var(--bg-color);
+  border-color: var(--primary);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  background: var(--surface);
+}
+
+/* Image and label inside card */
+.card img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 0.5rem;
+}
+
+.card span {
+  display: block;
+}
+
+/* Stage options */
+.stage-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.stage-option {
+  padding: 0.6rem 1rem;
+  background: var(--surface-light);
+  border: 1px solid #2c3261;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background var(--transition-speed);
+}
+
+.stage-option.selected {
+  background: var(--primary);
+  color: var(--bg-color);
+  border-color: var(--primary);
+}
+
+/* Date and range fields */
+.date-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.date-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--muted-color);
+}
+
+.date-fields input[type='date'],
+.date-fields input[type='range'],
+.date-fields input[type='number'] {
+  background: var(--surface-light);
+  border: 1px solid #2c3261;
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+  padding: 0.5rem;
+}
+
+.date-fields input[type='range'] {
+  width: 100%;
+}
+
+/* Prep hints */
+.prep-hints {
+  font-size: 0.8rem;
+  color: var(--muted-color);
+  margin-bottom: 1rem;
+}
+
+/* Budget details */
+.budget-details {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--muted-color);
+}
+
+.budget-details .detail {
+  margin-bottom: 0.4rem;
+}
+
+.range-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.range-label input[type='range'] {
+  width: 100%;
+}
+
+.range-label span {
+  font-size: 0.9rem;
+  color: var(--muted-color);
+}
+
+/* Funnel builder */
+.funnel-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+
+.funnel-item {
+  background: var(--surface-light);
+  padding: 0.8rem;
+  margin-bottom: 0.5rem;
+  border-radius: var(--border-radius);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: grab;
+}
+
+.funnel-item.dragging {
+  opacity: 0.6;
+}
+
+.block-library {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.block {
+  background: var(--surface-light);
+  border: 1px solid #2c3261;
+  padding: 0.5rem 0.8rem;
+  border-radius: var(--border-radius);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background var(--transition-speed);
+}
+
+.block:hover {
+  background: var(--primary);
+  color: var(--bg-color);
+  border-color: var(--primary);
+}
+
+/* Influencer list */
+.influencer-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.influencer-card {
+  background: var(--surface-light);
+  padding: 0.6rem;
+  border-radius: var(--border-radius);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid #2c3261;
+}
+
+.influencer-card input[type='checkbox'] {
+  accent-color: var(--primary);
+}
+
+/* Plan builder */
+.plan-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.plan-item {
+  background: var(--surface-light);
+  padding: 0.8rem;
+  border-radius: var(--border-radius);
+  border: 1px solid #2c3261;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.plan-item input[type='number'] {
+  width: 60px;
+  background: var(--bg-color);
+  border: 1px solid #2c3261;
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+  padding: 0.2rem;
+}
+
+/* Lead form */
+#step-8 label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--muted-color);
+  margin-bottom: 0.8rem;
+}
+
+#step-8 input[type='text'],
+#step-8 input[type='email'],
+#step-8 input[type='url'] {
+  background: var(--surface-light);
+  border: 1px solid #2c3261;
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+  padding: 0.5rem;
+}
+
+#step-8 .summary {
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  color: var(--muted-color);
+}
+
+#step-8 .checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+}
+
+/* Navigation buttons */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.nav-buttons button {
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--border-radius);
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background var(--transition-speed);
+}
+
+.nav-buttons button.back {
+  background: var(--surface-light);
+  color: var(--muted-color);
+}
+
+.nav-buttons button.next {
+  background: var(--primary);
+  color: var(--bg-color);
+}
+
+.nav-buttons button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nav-buttons button.next:not(:disabled):hover {
+  background: var(--accent);
+  color: var(--bg-color);
+}
+
+</style>
+  </head>
+  <body>
+    <!-- Top header with logo, progress bar and contact button -->
+    <header class="header">
+      <div class="logo">WNF&nbsp;Marketing</div>
+      <nav class="progress">
+        <!-- Indicators for each step. The active one is highlighted via JS -->
+        <span class="progress-item" id="indicator-1">1</span>
+        <span class="progress-item" id="indicator-2">2</span>
+        <span class="progress-item" id="indicator-3">3</span>
+        <span class="progress-item" id="indicator-4">4</span>
+        <span class="progress-item" id="indicator-5">5</span>
+        <span class="progress-item" id="indicator-6">6</span>
+        <span class="progress-item" id="indicator-7">7</span>
+        <span class="progress-item" id="indicator-8">8</span>
+      </nav>
+      <button class="contact-button">Contact Us</button>
+    </header>
+
+    <!-- Main content area with mascot message and form wizard -->
+    <main>
+      <div id="mascot" class="mascot">
+        <!-- The mascot bubble where a friendly message shows for each step -->
+        <p id="mascot-text"></p>
+      </div>
+      <form id="wizard-form" class="wizard-form" novalidate>
+        <!-- Step 1: Project type selection -->
+        <section class="step" id="step-1">
+          <h2>What type of project are you launching?</h2>
+          <p class="description">Select one that best describes your project</p>
+          <div class="card-grid" id="project-type-grid">
+            <!-- Cards generated by script.js -->
+          </div>
+          <div class="nav-buttons">
+            <button type="button" class="back" disabled>Back</button>
+            <button type="button" class="next" disabled>Continue</button>
+          </div>
+        </section>
+
+        <!-- Step 2: Project stage selection -->
+        <section class="step hidden" id="step-2">
+          <h2>What stage is your project?</h2>
+          <p class="description">Choose the current stage on the roadmap</p>
+          <div class="stage-options" id="stage-options">
+            <!-- Stage buttons generated via script.js -->
+          </div>
+          <div class="nav-buttons">
+            <button type="button" class="back">Back</button>
+            <button type="button" class="next" disabled>Continue</button>
+          </div>
+        </section>
+
+        <!-- Step 3: Dates & prep window -->
+        <section class="step hidden" id="step-3">
+          <h2>Dates and Preparation</h2>
+          <p class="description">Set your launch date and preparation window</p>
+          <div class="date-fields">
+            <label>
+              Launch date
+              <input type="date" id="launch-date" />
+            </label>
+            <label>
+              Prep days: <span id="prep-days-display">14</span>
+              <input type="range" id="prep-days" min="0" max="30" value="14" />
+            </label>
+          </div>
+          <div class="prep-hints" id="prep-hints">
+            <!-- hints inserted via script -->
+          </div>
+          <div class="nav-buttons">
+            <button type="button" class="back">Back</button>
+            <button type="button" class="next" disabled>Continue</button>
+          </div>
+        </section>
+
+        <!-- Step 4: Budget -->
+        <section class="step hidden" id="step-4">
+          <h2>Budget</h2>
+          <p class="description">Choose your total marketing budget</p>
+          <label class="range-label">
+            <input type="range" id="budget-range" min="1000" max="300000" step="1000" value="5000" />
+            <span>USD $<span id="budget-display">5000</span></span>
+          </label>
+          <div class="budget-details" id="budget-details">
+            <!-- Fee details inserted via script -->
+          </div>
+          <div class="nav-buttons">
+            <button type="button" class="back">Back</button>
+            <button type="button" class="next" disabled>Continue</button>
+          </div>
+        </section>
+
+        <!-- Step 5: Funnel builder (simplified) -->
+        <section class="step hidden" id="step-5">
+          <h2>Funnel Builder</h2>
+          <p class="description">Reorder and add marketing steps</p>
+          <ul id="funnel-list" class="funnel-list">
+            <!-- Blocks inserted via script -->
+          </ul>
+          <div class="add-blocks">
+            <h3>Add a block</h3>
+            <div id="block-library" class="block-library">
+              <!-- Additional blocks inserted via script -->
+            </div>
+          </div>
+          <div class="nav-buttons">
+            <button type="button" class="back">Back</button>
+            <button type="button" class="next">Continue</button>
+          </div>
+        </section>
+
+        <!-- Step 6: Influencers & media (placeholder) -->
+        <section class="step hidden" id="step-6">
+          <h2>Influencers and Media</h2>
+          <p class="description">Select recommended influencers and media channels</p>
+          <div class="influencer-list" id="influencer-list">
+            <!-- placeholder influencers inserted via script -->
+          </div>
+          <div class="nav-buttons">
+            <button type="button" class="back">Back</button>
+            <button type="button" class="next">Continue</button>
+          </div>
+        </section>
+
+        <!-- Step 7: Plan builder (simplified) -->
+        <section class="step hidden" id="step-7">
+          <h2>Plan Builder</h2>
+          <p class="description">Review and adjust your marketing plan</p>
+          <div id="plan-items" class="plan-items">
+            <!-- Plan items generated via script -->
+          </div>
+          <div class="nav-buttons">
+            <button type="button" class="back">Back</button>
+            <button type="button" class="next">Continue</button>
+          </div>
+        </section>
+
+        <!-- Step 8: Lead form and submit -->
+        <section class="step hidden" id="step-8">
+          <h2>Submit your details</h2>
+          <p class="description">Fill in your contact info to receive the plan</p>
+          <label>
+            Email
+            <input type="email" id="lead-email" required />
+          </label>
+          <label>
+            Telegram handle
+            <input type="text" id="lead-telegram" />
+          </label>
+          <label>
+            Website URL
+            <input type="url" id="lead-website" />
+          </label>
+          <label>
+            Project link (optional)
+            <input type="url" id="lead-project-link" />
+          </label>
+          <label class="checkbox">
+            <input type="checkbox" id="lead-consent" /> I consent to be contacted
+          </label>
+          <div class="summary" id="final-summary">
+            <!-- Final summary inserted via script on submit -->
+          </div>
+          <div class="nav-buttons">
+            <button type="button" class="back">Back</button>
+            <button type="submit" class="next">Submit</button>
+          </div>
+        </section>
+      </form>
+    </main>
+
+    <script>
+// WNF Marketing Strategy Builder
+// Basic wizard implementation in plain JavaScript
+
+document.addEventListener('DOMContentLoaded', () => {
+  /**
+   * Application state collects user selections across steps.
+   */
+  const state = {
+    projectType: null,
+    stage: null,
+    launchDate: null,
+    prepDays: 14,
+    budget: 5000,
+    feePercent: 0.3,
+    feeAmount: 1500,
+    executionBudget: 3500,
+    funnel: [],
+    influencers: [],
+    plan: [],
+  };
+
+  // Step handling
+  let currentStep = 1;
+  const totalSteps = 8;
+
+  // DOM references
+  const progressItems = Array.from(document.querySelectorAll('.progress-item'));
+  const steps = Array.from(document.querySelectorAll('.step'));
+  const mascotText = document.getElementById('mascot-text');
+
+  // Step descriptions for mascot
+  const mascotMessages = {
+    1: 'Select the category that best matches your crypto project.',
+    2: 'Tell us what stage you are at in your journey.',
+    3: 'Choose your target launch date and how long you have to prepare.',
+    4: 'Set your marketing budget and see our commission.',
+    5: 'Arrange the marketing funnel to suit your goals.',
+    6: 'Pick key influencers and media partners.',
+    7: 'Review and tweak your marketing plan.',
+    8: 'Enter your contact details to receive your custom plan.',
+  };
+
+  /**
+   * Update progress indicator and mascot message.
+   */
+  function updateProgress() {
+    progressItems.forEach((item, index) => {
+      item.classList.toggle('active', index + 1 === currentStep);
+    });
+    mascotText.textContent = mascotMessages[currentStep] || '';
+  }
+
+  /**
+   * Go to a specific step by index.
+   * @param {number} stepIndex
+   */
+  function goToStep(stepIndex) {
+    currentStep = stepIndex;
+    steps.forEach((step, idx) => {
+      step.classList.toggle('hidden', idx + 1 !== currentStep);
+    });
+    updateProgress();
+  }
+
+  // Initialize project types cards
+  const projectTypes = [
+    'DeFi',
+    'Memecoin',
+    'GameFi',
+    'NFT',
+    'SocialFi',
+    'RWA',
+    'Infrastructure',
+    'AI x Web3',
+    'Gambling & Casino',
+    'Other',
+  ];
+  const typeGrid = document.getElementById('project-type-grid');
+  // Mapping of project types to icon filenames for display in the wizard
+  const projectIcons = {
+  'DeFi': 'defi.png',
+  'Memecoin': 'meme.png',
+  'GameFi': 'game.png',
+  'NFT': 'nft.png',
+  'SocialFi': 'social.png',
+  'RWA': 'rwa.png',
+  'Infrastructure': 'infra.png',
+  'AI x Web3': 'ai.png',
+  'Gambling and Casino': 'gamble.png',
+  'Other': 'other.png',
+};
+  const step1Next = document.querySelector('#step-1 .next');
+  projectTypes.forEach((type) => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.tabIndex = 0;
+    // Append an image and a label instead of plain text for the project type
+    const img = document.createElement('img');
+    img.src = projectIcons[type] || '';
+    img.alt = `${type} icon`;
+    card.appendChild(img);
+    const span = document.createElement('span');
+    span.textContent = type;
+    card.appendChild(span);
+    card.addEventListener('click', () => {
+      state.projectType = type;
+      // toggle selection UI
+      document.querySelectorAll('#project-type-grid .card').forEach((c) => c.classList.remove('selected'));
+      card.classList.add('selected');
+      step1Next.disabled = false;
+    });
+    card.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') card.click();
+    });
+    typeGrid.appendChild(card);
+  });
+
+  // Step 1 navigation
+  const step1Back = document.querySelector('#step-1 .back');
+  step1Back.addEventListener('click', () => {});
+  step1Next.addEventListener('click', () => {
+    goToStep(2);
+  });
+
+  // Initialize project stages
+  const stages = ['Concept', 'Pre seed', 'Seed', 'Private sale', 'Public sale', 'TGE', 'Post TGE'];
+  const stageContainer = document.getElementById('stage-options');
+  const step2Next = document.querySelector('#step-2 .next');
+  stages.forEach((stage) => {
+    const btn = document.createElement('div');
+    btn.className = 'stage-option';
+    btn.textContent = stage;
+    btn.tabIndex = 0;
+    btn.addEventListener('click', () => {
+      state.stage = stage;
+      document.querySelectorAll('#stage-options .stage-option').forEach((el) => el.classList.remove('selected'));
+      btn.classList.add('selected');
+      step2Next.disabled = false;
+    });
+    btn.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') btn.click();
+    });
+    stageContainer.appendChild(btn);
+  });
+  const step2Back = document.querySelector('#step-2 .back');
+  step2Back.addEventListener('click', () => {
+    goToStep(1);
+  });
+  step2Next.addEventListener('click', () => {
+    goToStep(3);
+  });
+
+  // Step 3: dates & prep
+  const launchInput = document.getElementById('launch-date');
+  const prepRange = document.getElementById('prep-days');
+  const prepDisplay = document.getElementById('prep-days-display');
+  const prepHintsContainer = document.getElementById('prep-hints');
+  const step3Next = document.querySelector('#step-3 .next');
+  const step3Back = document.querySelector('#step-3 .back');
+
+  // Update prep hints based on range value
+  function updatePrepHints(days) {
+    let hint = '';
+    if (days <= 3) {
+      hint = '0–3 days: only fast deliverables such as press releases and quick influencer shoutouts.';
+    } else if (days <= 6) {
+      hint = '4–6 days: add AMA sessions, short content pieces and basic KOL involvement.';
+    } else if (days <= 13) {
+      hint = '7–13 days: full KOL programs, partnerships and native media articles become feasible.';
+    } else {
+      hint = '14–30 days: long‑lead media, comprehensive content and large partnerships are possible.';
+    }
+    prepHintsContainer.textContent = hint;
+  }
+
+  prepRange.addEventListener('input', (e) => {
+    const days = parseInt(e.target.value, 10);
+    state.prepDays = days;
+    prepDisplay.textContent = days;
+    updatePrepHints(days);
+    // launch date must be selected to proceed
+    step3Next.disabled = !launchInput.value;
+  });
+
+  launchInput.addEventListener('change', (e) => {
+    state.launchDate = e.target.value;
+    // step3 can continue only if a launch date is chosen
+    step3Next.disabled = !state.launchDate;
+  });
+
+  step3Back.addEventListener('click', () => {
+    goToStep(2);
+  });
+  step3Next.addEventListener('click', () => {
+    goToStep(4);
+  });
+  // Initialize hints display
+  updatePrepHints(state.prepDays);
+  prepDisplay.textContent = state.prepDays;
+  step3Next.disabled = true;
+
+  // Step 4: Budget
+  const budgetRange = document.getElementById('budget-range');
+  const budgetDisplay = document.getElementById('budget-display');
+  const budgetDetails = document.getElementById('budget-details');
+  const step4Next = document.querySelector('#step-4 .next');
+  const step4Back = document.querySelector('#step-4 .back');
+
+  function calculateFee(budget) {
+    // Fee tiers: 1–5k:30%, 5–10k:25%, 10–25k:20%, 25–50k:18%, 50–100k:15%, 100k+:10%
+    let percent;
+    if (budget <= 5000) percent = 0.3;
+    else if (budget <= 10000) percent = 0.25;
+    else if (budget <= 25000) percent = 0.2;
+    else if (budget <= 50000) percent = 0.18;
+    else if (budget <= 100000) percent = 0.15;
+    else percent = 0.1;
+    return percent;
+  }
+
+  function updateBudgetDetails(budget) {
+    const feePercent = calculateFee(budget);
+    const feeAmount = Math.round(budget * feePercent);
+    const execBudget = budget - feeAmount;
+    state.budget = budget;
+    state.feePercent = feePercent;
+    state.feeAmount = feeAmount;
+    state.executionBudget = execBudget;
+    budgetDisplay.textContent = budget;
+    // Build details text
+    budgetDetails.innerHTML = '';
+    const lines = [
+      `Agency fee: ${Math.round(feePercent * 100)}%`,
+      `Fee amount: $${feeAmount.toLocaleString()}`,
+      `Execution budget: $${execBudget.toLocaleString()}`,
+    ];
+    lines.forEach((line) => {
+      const div = document.createElement('div');
+      div.className = 'detail';
+      div.textContent = line;
+      budgetDetails.appendChild(div);
+    });
+  }
+
+  budgetRange.addEventListener('input', (e) => {
+    const val = parseInt(e.target.value, 10);
+    updateBudgetDetails(val);
+  });
+
+  step4Back.addEventListener('click', () => {
+    goToStep(3);
+  });
+  step4Next.addEventListener('click', () => {
+    goToStep(5);
+  });
+  // Initialize budget details
+  updateBudgetDetails(state.budget);
+
+  // Step 5: Funnel builder
+  const funnelList = document.getElementById('funnel-list');
+  const blockLibrary = document.getElementById('block-library');
+  const step5Next = document.querySelector('#step-5 .next');
+  const step5Back = document.querySelector('#step-5 .back');
+
+  // Predefined funnel blocks (id, title, mandatory)
+  const defaultBlocks = [
+    { id: 'messaging', title: 'Positioning & Messaging', mandatory: true },
+    { id: 'branding', title: 'Branding & Design', mandatory: true },
+    { id: 'content', title: 'Content Production', mandatory: false },
+    { id: 'community', title: 'Community Setup', mandatory: true },
+    { id: 'influencers', title: 'Influencers Activation', mandatory: true },
+    { id: 'kol', title: 'KOL Program', mandatory: false },
+    { id: 'pr', title: 'PR & Press Release', mandatory: false },
+    { id: 'media', title: 'Native Media Articles', mandatory: false },
+    { id: 'paid', title: 'Paid Traffic', mandatory: false },
+    { id: 'partnerships', title: 'Partnerships', mandatory: false },
+  ];
+  const availableBlocks = [
+    { id: 'listings', title: 'Listing Preparation' },
+    { id: 'referral', title: 'Referral & Quests' },
+    { id: 'analytics', title: 'Analytics & Tracking' },
+  ];
+
+  // Initialize funnel with mandatory blocks + two optional defaults
+  function initFunnel() {
+    state.funnel = [];
+    // Choose mandatory blocks and top optional ones based on project type/stage (simplified)
+    defaultBlocks.forEach((block) => {
+      if (block.mandatory || block.id === 'content') {
+        state.funnel.push(block.id);
+      }
+    });
+    renderFunnel();
+  }
+
+  function renderFunnel() {
+    // Clear list
+    funnelList.innerHTML = '';
+    state.funnel.forEach((id) => {
+      const block = defaultBlocks.find((b) => b.id === id) || availableBlocks.find((b) => b.id === id);
+      const li = document.createElement('li');
+      li.className = 'funnel-item';
+      li.draggable = true;
+      li.dataset.id = id;
+      li.innerHTML = `
+        <span>${block.title}</span>
+        <span class="handle">☰</span>
+      `;
+      funnelList.appendChild(li);
+    });
+    attachDragHandlers();
+  }
+
+  function renderBlockLibrary() {
+    blockLibrary.innerHTML = '';
+    availableBlocks.forEach((block) => {
+      const el = document.createElement('div');
+      el.className = 'block';
+      el.textContent = block.title;
+      el.addEventListener('click', () => {
+        state.funnel.push(block.id);
+        renderFunnel();
+      });
+      blockLibrary.appendChild(el);
+    });
+  }
+
+  function attachDragHandlers() {
+    const items = funnelList.querySelectorAll('.funnel-item');
+    let dragSrcEl = null;
+    items.forEach((item) => {
+      item.addEventListener('dragstart', (e) => {
+        dragSrcEl = item;
+        item.classList.add('dragging');
+      });
+      item.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        const target = e.currentTarget;
+        if (dragSrcEl && target !== dragSrcEl) {
+          const bounding = target.getBoundingClientRect();
+          const offset = e.clientY - bounding.top;
+          const half = bounding.height / 2;
+          const parent = target.parentNode;
+          if (offset > half) {
+            parent.insertBefore(dragSrcEl, target.nextSibling);
+          } else {
+            parent.insertBefore(dragSrcEl, target);
+          }
         }
-        .sticker{transform-origin:50% 100%;-webkit-clip-path:polygon(0 100%,100% 100%,100% 100%,0 100%);clip-path:polygon(0 100%,100% 100%,100% 100%,0 100%);transform:perspective(900px) rotateX(70deg) translateY(14px);filter:drop-shadow(0 18px 22px rgba(0,0,0,.35));will-change:clip-path,transform,filter;width:min(70vw,520px);} .sticker img{display:block;width:100%;height:auto;} .sticker.is-on{animation:stickerApply 900ms cubic-bezier(.2,.9,.2,1) forwards;} @keyframes stickerApply{0%{-webkit-clip-path:polygon(0 100%,100% 100%,100% 100%,0 100%);clip-path:polygon(0 100%,100% 100%,100% 100%,0 100%);transform:perspective(900px) rotateX(70deg) translateY(14px);filter:drop-shadow(0 18px 22px rgba(0,0,0,.35));}65%{-webkit-clip-path:polygon(0 38%,100% 38%,100% 100%,0 100%);clip-path:polygon(0 38%,100% 38%,100% 100%,0 100%);transform:perspective(900px) rotateX(16deg) translateY(0);filter:drop-shadow(0 10px 16px rgba(0,0,0,.28));}90%{-webkit-clip-path:polygon(0 0,100% 0,100% 100%,0 100%);clip-path:polygon(0 0,100% 0,100% 100%,0 100%);transform:perspective(900px) rotateX(-2deg);}100%{-webkit-clip-path:polygon(0 0,100% 0,100% 100%,0 100%);clip-path:polygon(0 0,100% 0,100% 100%,0 100%);transform:perspective(900px) rotateX(0deg);filter:drop-shadow(0 6px 10px rgba(0,0,0,.22));}}
-    </style>
-</head>
-<body>
-    <h1>Hello from codex-site environment</h1>
-    <div class="sticker js-sticker">
-      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAV4AAADICAYAAACgY4nwAAAFeUlEQVR4nO3dS3LUSBCAYTHBOXpjFj6Oj8pxvLA3vohnMeNx09MPPUqpzKrv2xEQRIdV+klSwkwTAAAAAAAAAAAAAAAAALT04+gPwH1vL6fPWz/36/eH6wcFuXGT+gru0/Pp5q95f/2Y9XsJNOTihkxmTnCXmhvoaRJpiOAmS+B8ndAyuGuYomF/bp4D7THdRjFFw3puiANUDu4apmj4k4MeJNM6IStTNKNweHc22nQbxRRNZQ7lTgQ3B1M0GTloDVkn1GaKJooD1IDpdiy3Ai3IzOWgbCC4nPsKsgDziAOykHUCj7y/fogvdzkcM5luWUJ8ucfBeEBwWcvqgVsciCusE2jJ9Mslh+GM6Za9mH455xBMgksc0y/TNHB4rRM4ivgy3MU33ZKB1cPYhrnogktGpt8xdX3BrROowPQ7ni4vtOmWiky/4+jqIgsu1YnvGMpfYOsEemP10L+yF9Z0S+9Mv/0qd1EFl5GYfvtU4mJaJzA6029fUl9I0y18E99+pLyIggvXWT30IdXFE1yYx/Rb28+jP8Al0YXHnp5P09vL9DlNpt+K/jr6AwDrPD2f/g3w98NnahBeKE5860n3V5S3l9OndQMs58FbHSZe6ITVQx3pHq4B23jwlp+JFzpk+s1NeKFj4puTVQN0zuohHxMvDMDqIZeUf/p5pQz247Wz45l4YTCm3+MJLwxKfI/j4RoMzIO3Y5h4YXBWD/FMvMA0TabfSCZe4D+m3xgpw/vr98ePr1degHjiuy+rBuAqq4f9pJx4gRysHvZh4gUeMv22ZeIFZjH9tiO8wCLiu51VA7CY1cM2qb9gvksZ5Pf++iG+C5l4gU1Mv8vZ8QKbefC2jPACzYjvPFYNQFNWD4+ZeIHmrB7uE16AYKnD67uUQV1eM7stdXgBeiS8AMGEFyCY8ALN2e/eJ7wAwYQXIFj68HqlDOhN+vACtdjvPia8AMGEFyCY8AIEE16gGfvdeYQXIFiJ8HqlDOhJifAC9ER4gSbsd+cTXoBgwgsQTHgBggkvsJn97jJlwuuVMqAXZcIL0AvhBQgmvMAm9rvLCS9AMOEFCCa8AMGEF1jNfnedUuH1Li/Qg1LhBeiB8AIEE15gFfvd9YQXIJjwAgQTXmAxa4ZtyoXXK2VAdeXCC1Cd8AIEE15gEfvd7YQXIJjwAgQTXoBgJcPrlTI4hv1uGyXDC1CZ8AIEE16AYMILzGK/247wAgQTXoBgZcPrlTKgqrLhBeLY77YlvADBhBcgmPACBBNe4C773faEFyBY6fB6pQyoqHR4ASoSXuAm+919CC9AMOEFCCa8AMGEF7jKfnc/5cPrlTKgmvLhBahGeAGCCS/wP/a7+xJe4A+emezv59EfADjeeWxNuvsTXhiU2B6nmy/228vp8+n5dPTHgNTENgcTL3RObPMRXuiQ2OYmvNAJsa1DeKEwsa1JeKEYsa1PeKEAse1LVxfQK2X04vJfj4ltX0y8kISpdhzCCwcS2zEJLwQTW4QXAogt54QXdiK23CK80JDYMkd3B8MrZUQTW5Yy8cIKYssWwgsziS2tdBnerxvEyoGtxJY9dH2Q3l5On+c/FmLmEFv2NtShugzxNIkx/xBbIg1/wEzF4xJbjuKwXRDivoktGTh4D1hP1Ce2ZOMQrmAqzk9sycyBbMBUnIPYUoXDuRNTcQyxpSIHNYgQtyO2VOfQHsR6Yj7//xi9cYATMRV/M9XSMwc6sdGmYrFlFA53Mb1NxWLLiBz04iqGWGwZnUPfmazrCbGFb26AARw1FYstXOdmGNCeU7HYwmNuDKZp2jYViy0s4ybhqkchFltYzw3DLJchFlsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIL8DVq9s7k/4tQmAAAAAElFTkSuQmCC" alt="">
-    </div>
-    <script>(function(){ var el=document.querySelector('.js-sticker'); if(!el) return; function play(){ el.classList.remove('is-on'); void el.offsetWidth; el.classList.add('is-on'); } if('IntersectionObserver' in window){ var io=new IntersectionObserver(function(entries){ entries.forEach(function(e){ if(e.isIntersecting){ play(); io.disconnect(); } });}, { threshold:0.6 }); io.observe(el);} else { setTimeout(play,200);} el.addEventListener('click',play);})();</script>
-</body>
+      });
+      item.addEventListener('dragend', () => {
+        item.classList.remove('dragging');
+        // After drag, update state order
+        state.funnel = Array.from(funnelList.querySelectorAll('.funnel-item')).map((el) => el.dataset.id);
+      });
+    });
+  }
+
+  step5Back.addEventListener('click', () => {
+    goToStep(4);
+  });
+  step5Next.addEventListener('click', () => {
+    goToStep(6);
+  });
+  // Initialize funnel builder
+  initFunnel();
+  renderBlockLibrary();
+
+  // Step 6: Influencers & media
+  const influencerList = document.getElementById('influencer-list');
+  const step6Back = document.querySelector('#step-6 .back');
+  const step6Next = document.querySelector('#step-6 .next');
+  const influencerData = [
+    { id: 'inf1', name: 'CryptoKing', platform: 'X' },
+    { id: 'inf2', name: 'DeFiQueen', platform: 'YouTube' },
+    { id: 'inf3', name: 'GameFiGuru', platform: 'X' },
+    { id: 'inf4', name: 'NFTWizard', platform: 'YouTube' },
+    { id: 'inf5', name: 'SocialFiStar', platform: 'X' },
+  ];
+
+  function renderInfluencers() {
+    influencerList.innerHTML = '';
+    influencerData.forEach((inf) => {
+      const card = document.createElement('div');
+      card.className = 'influencer-card';
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.id = inf.id;
+      checkbox.checked = state.influencers.includes(inf.id);
+      checkbox.addEventListener('change', () => {
+        if (checkbox.checked) {
+          if (!state.influencers.includes(inf.id)) state.influencers.push(inf.id);
+        } else {
+          state.influencers = state.influencers.filter((id) => id !== inf.id);
+        }
+      });
+      const label = document.createElement('label');
+      label.htmlFor = inf.id;
+      label.innerHTML = `<strong>${inf.name}</strong><br/><span style="font-size:0.8rem; color: var(--muted-color)">${inf.platform}</span>`;
+      card.appendChild(checkbox);
+      card.appendChild(label);
+      influencerList.appendChild(card);
+    });
+  }
+
+  step6Back.addEventListener('click', () => {
+    goToStep(5);
+  });
+  step6Next.addEventListener('click', () => {
+    // Before moving to plan builder, generate plan items from current funnel
+    buildPlan();
+    goToStep(7);
+  });
+  renderInfluencers();
+
+  // Step 7: Plan builder (simplified)
+  const planContainer = document.getElementById('plan-items');
+  const step7Back = document.querySelector('#step-7 .back');
+  const step7Next = document.querySelector('#step-7 .next');
+
+  function buildPlan() {
+    planContainer.innerHTML = '';
+    state.plan = [];
+    // For each funnel block, create a basic plan entry
+    state.funnel.forEach((id) => {
+      const block = defaultBlocks.find((b) => b.id === id) || availableBlocks.find((b) => b.id === id);
+      const item = {
+        id,
+        title: block.title,
+        quantity: 1,
+      };
+      state.plan.push(item);
+    });
+    renderPlan();
+  }
+
+  function renderPlan() {
+    planContainer.innerHTML = '';
+    state.plan.forEach((item, idx) => {
+      const div = document.createElement('div');
+      div.className = 'plan-item';
+      div.innerHTML = `
+        <span>${item.title}</span>
+        <input type="number" min="1" value="${item.quantity}" data-index="${idx}" />
+      `;
+      const input = div.querySelector('input');
+      input.addEventListener('input', (e) => {
+        const i = parseInt(e.target.dataset.index, 10);
+        state.plan[i].quantity = parseInt(e.target.value, 10);
+      });
+      planContainer.appendChild(div);
+    });
+  }
+
+  step7Back.addEventListener('click', () => {
+    goToStep(6);
+  });
+  step7Next.addEventListener('click', () => {
+    goToStep(8);
+    renderSummary();
+  });
+
+  // Plan will be built in step6Next before entering step 7
+
+  // Step 8: Lead form and submit
+  const finalSummary = document.getElementById('final-summary');
+  const step8Back = document.querySelector('#step-8 .back');
+  step8Back.addEventListener('click', () => {
+    goToStep(7);
+  });
+  const wizardForm = document.getElementById('wizard-form');
+  wizardForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // Collect lead info
+    const email = document.getElementById('lead-email').value.trim();
+    const tg = document.getElementById('lead-telegram').value.trim();
+    const site = document.getElementById('lead-website').value.trim();
+    const link = document.getElementById('lead-project-link').value.trim();
+    const consent = document.getElementById('lead-consent').checked;
+    // Compose payload
+    const payload = {
+      answers: {
+        projectType: state.projectType,
+        stage: state.stage,
+        launchDate: state.launchDate,
+        prepDays: state.prepDays,
+        budget: state.budget,
+        feePercent: state.feePercent,
+        feeAmount: state.feeAmount,
+        executionBudget: state.executionBudget,
+      },
+      funnel: state.funnel,
+      influencers: state.influencers,
+      plan: state.plan,
+      lead: {
+        email,
+        telegram: tg,
+        website: site,
+        projectLink: link,
+        consent,
+      },
+    };
+    // Show summary
+    finalSummary.innerHTML = `<pre>${JSON.stringify(payload, null, 2)}</pre>`;
+    alert('Thank you! Your request has been recorded.');
+  });
+
+  function renderSummary() {
+    // Called when entering step 8; update summary (optional: show human readable summary)
+    finalSummary.innerHTML = '';
+  }
+
+  // Initially go to step 1
+  goToStep(1);
+});
+</script>
+  </body>
 </html>
-
